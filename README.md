@@ -21,7 +21,8 @@ pip install -r requirements.txt
 ## How to use the browser
 
 - 'name_of_dir' argument is optional. This directory will be used to cache the websites you visit. If no directory is given, 'cache' will be the name of the default directory.
-- The cached files are saved in the above specified directory. Name of the file for https://www.example.com, will be example
+- The cached files are saved in the above specified directory.
+Name of the file for https://www.example.com, will be example
 - All the websites you look for will be stored in the form of a stack. You can use the *back* command to go to the previous website.
 - You can use the *exit* command to exit the browser.
 - The links are highlighted in blue.
@@ -34,7 +35,7 @@ python3 browser.py name_of_dir
 ...
 > back
 * Takes you back to the previous website(ie, website1.com) *
-> website2.txt
+> website2
 * Displays the cached data *
->exit
+> exit
 ```
