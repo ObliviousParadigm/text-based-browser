@@ -20,9 +20,11 @@ pip install -r requirements.txt
 
 ## How to use the browser
 
-'name_of_dir' argument is required, for now. This directory will be used to cache the websites you visit.
-All the websites you look for will be stored in the form of a stack. You can use the *back* command to go to the previous website.
-You can use the *exit* command to exit the browser.
+- 'name_of_dir' argument is required, for now. This directory will be used to cache the websites you visit.
+- All the websites you look for will be stored in the form of a stack. You can use the *back* command to go to the previous website.
+- You can use the *exit* command to exit the browser.
+- The links are highlighted in blue.
+
 ```bash
 python3 browser.py name_of_dir
 > Enter_name_of_website, say website1
