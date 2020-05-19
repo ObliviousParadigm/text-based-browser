@@ -3,42 +3,50 @@ import sys
 import os
 from collections import deque
 from bs4 import BeautifulSoup
-from colorama import Fore, Style
+from colorama import Fore
 
 
 # Saving the data locally, if a directory has been specified
 def save_local(dir_name, url, data):
     stripped_name = url.rsplit('.', 1)[0].lstrip('https://www.')
-    with open(f'{dir_name}/{stripped_name}.txt', 'w') as local:
+    with open(f'{dir_name}/{stripped_name}', 'w') as local:
         # Writing the shortened url and its data
         local.write(data)
 
+# Display the cached data
+def read_cached(dir_name, name):
+    with open(f'{dir_name}/{name}') as file:
+        for line in file:
+            print(line, end='')
 
 def scrape_and_display(url):
-    # Send GET request
-    r = requests.get(url)
-    scraped_data = ''
+    try:
+        # Send GET request
+        r = requests.get(url)
+        scraped_data = ''
 
-    # Retrieve the data
-    soup = BeautifulSoup(r.content, 'html.parser')
+        # Retrieve the data
+        soup = BeautifulSoup(r.content, 'html.parser')
 
-    # This list can be customized to the user's needs
-    scrape_list = ['p', 'h1', 'h2', 'h3', 'il', 'h4', 'h5', 'h6', 'ul', 'ol']
+        # This list can be customized to the user's needs
+        scrape_list = ['p', 'h1', 'h2', 'h3', 'il', 'h4', 'h5', 'h6', 'ul', 'ol']
 
-    # Get body and title
-    body = soup.find('body')
-    title = soup.html.head.title.text + '\n'
+        # Get body and title
+        body = soup.find('body')
+        title = soup.html.head.title.text + '\n'
 
-    # Storing the title in a different color
-    scraped_data += Fore.MAGENTA + title + Fore.RESET
+        # Storing the title in a different color
+        scraped_data += Fore.MAGENTA + title + Fore.RESET
 
-    descendants = body.descendants
-    for tag in descendants:
-        # Highlight the anchor tags in blue
-        if tag.name == 'a':
-            scraped_data += Fore.BLUE + tag.text + Fore.RESET + '\n'
-        elif tag.name in scrape_list:
-            scraped_data += tag.text + '\n'
+        descendants = body.descendants
+        for tag in descendants:
+            # Highlight the anchor tags in blue
+            if tag.name == 'a':
+                scraped_data += Fore.BLUE + tag.text + Fore.RESET + '\n'
+            elif tag.name in scrape_list:
+                scraped_data += tag.text + '\n'
+    except requests.exceptions.RequestException:
+        scraped_data = Fore.RED + 'Error performing GET request' + Fore.RESET
 
     print(scraped_data)
     return scraped_data
@@ -70,9 +78,8 @@ while page != 'exit':
         flag = 0  # Website is valid
         name = page.lstrip('https://')
         # print file if it exists
-        if os.path.isfile(f'{dir_name}/{name}.txt'):
-            with open(f'{dir_name}/{name}.txt') as file:
-                print(file.readlines())
+        if os.path.isfile(f'{dir_name}/{name}'):
+            read_cached(dir_name, name)
         else:
             # no cache file and no '.'
             print('Error: Incorrect URL')
@@ -86,7 +93,7 @@ while page != 'exit':
         # Creating a local copy
         save_local(dir_name, page, data)
 
-    if not flag:
+    if flag:
         print('Error: File does not exist')
         flag = 1
 
