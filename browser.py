@@ -44,7 +44,7 @@ back_button = deque()
 if not os.path.isdir(dir_name):
     os.mkdir(dir_name)
 
-page = input()
+page = input('> ')
 flag = 1  # Assuming that the website is invalid
 
 while page != 'exit':
@@ -72,7 +72,7 @@ while page != 'exit':
         print('Error: File does not exist')
         flag = 1
 
-    new_page = input()
+    new_page = input('> ')
     if new_page == 'back':
         page = back_button.pop()
     else:
