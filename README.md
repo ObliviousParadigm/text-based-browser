@@ -1,7 +1,5 @@
 # text-based-browser
 
-## Getting Started
-
 This is a simple text-based browser which will scrape the data from the website entered by the user. It is mainly targetted towards those individuals who want to do everything from their browser, and those who don't want to spend their time scraping websites but want some data without using the mouse.
 
 ## Prerequisites
